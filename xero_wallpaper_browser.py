@@ -1845,8 +1845,25 @@ def _install_message_filter():
     except Exception:
         pass
 
+def _set_max_open_fd(n):
+    try:
+        result = subprocess.run(f"ulimit -Sn {n}", shell=True, check=True)
+        status_code = result.returncode
+        print(result.returncode)
+        if status_code == 0:
+            return True, None
+        else:
+            return False,result.stderr
+    except Exception as e:
+        print(f"Exception: {e.stderr}")
+        return False,e.stderr
+
+    
 
 def main():
+    s,e =_set_max_open_fd(4096)
+    if s == False:
+        raise RuntimeError(e)
     _install_message_filter()
     app = QApplication(sys.argv)
     app.setApplicationName("Xero Wallpaper Browser")
