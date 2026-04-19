@@ -1857,8 +1857,6 @@ def _set_max_open_fd(n):
         print(f"Exception: {e.stderr}")
         return False,e.stderr
 
-    
-
 def main():
     s,e =_set_max_open_fd(4096)
     if s == False:
