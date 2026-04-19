@@ -1849,7 +1849,6 @@ def _set_max_open_fd(n):
     try:
         result = subprocess.run(f"ulimit -Sn {n}", shell=True, check=True)
         status_code = result.returncode
-        print(result.returncode)
         if status_code == 0:
             return True, None
         else:
